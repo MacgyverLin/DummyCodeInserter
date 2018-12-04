@@ -1,0 +1,1 @@
+for /r . %%g in (*.cpp) do python DummyCodeInserter.py %%g %%g 8 3
