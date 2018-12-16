@@ -106,10 +106,10 @@ class CPPCtor:
         self.className = className
         self.parentClassName = parentClassName
 
-    def generate_H(self, tabcount):
+    def generateHeader(self, tabcount):
         return tab(tabcount) + self.className + "()"
 
-    def generate_CPP(self, tabcount):
+    def generateCPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.className + "::" + self.className + "()" + "\n"
         rval += tab(tabcount) + ": " + self.parentClassName + "()" + "\n"
@@ -127,10 +127,10 @@ class CPPDtor:
     def __init__(self, className):
         self.className = className
 
-    def generate_H(self, tabcount):
+    def generateHeader(self, tabcount):
         return tab(tabcount) + "~" + self.className + "()"
 
-    def generate_CPP(self, tabcount):
+    def generateCPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.className + "::" + "~" + self.className + "()" + "\n"
         rval += tab(tabcount) + "{" + "\n"
@@ -152,12 +152,12 @@ class CPPFunction:
         self.functionType = functionType
         self.parameterList = parameterList
 
-    def generate_H(self, tabcount):
+    def generateHeader(self, tabcount):
         rval = ""
         rval += tab(tabcount) + getVirtualString(self.isVirtual) + self.functionType.generate() + " " + getNextFunctionName() + "(" + self.parameterList.generate() + ")"
         return rval
 
-    def generate_CPP(self, tabcount):
+    def generateCPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.functionType.generate() + " " + self.className + "::" + getNextFunctionName() + "(" + self.parameterList.generate() + ")" + "\n"
         rval += tab(tabcount) + "{" + "\n"
@@ -181,12 +181,12 @@ class CPPVariable:
         self.access = access
         self.variableType = variableType
 
-    def generate_H(self, tabcount):
+    def generateHeader(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.variableType.generate()  + " " + getNextVariableName()
         return rval
 
-    def generate_CPP(self, tabcount):
+    def generateCPP(self, tabcount):
         rval = ""
         return rval
 
@@ -243,7 +243,14 @@ class CPPClass:
 
     def generateHeaderBody(self, tabcount):
         rval = ""
-        rval += tab(tabcount)  + "class " + self.className + "\n"
+
+        print(self.parentClassName)
+
+        if(not self.parentClassName==""):
+            rval += tab(tabcount)  + "class " + self.className + " : public " + self.parentClassName + "\n"
+        else:
+            rval += tab(tabcount)  + "class " + self.className + "\n"
+
         rval += tab(tabcount) + "{\n"
 
         #######################################################################
@@ -251,61 +258,61 @@ class CPPClass:
         rval += tab(tabcount) + getAccessString("public") + "\n"
 
         # generate constructor
-        rval += self.ctor.generate_H(tabcount+1) + ";" + "\n"
+        rval += self.ctor.generateHeader(tabcount+1) + ";" + "\n"
 
         # generate destructopr
-        rval += self.dtor.generate_H(tabcount+1) + ";" + "\n"
+        rval += self.dtor.generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # public function
         rval += tab(tabcount) + getAccessString("public") + "\n"
 
         for i in range(len(self.publicFunctions)):
-            rval += self.publicFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.publicFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         for i in range(len(self.virtualPublicFunctions)):
-            rval += self.virtualPublicFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.virtualPublicFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # protected function
         rval += tab(tabcount) + getAccessString("protected") + "\n"
 
         for i in range(len(self.protectedFunctions)):
-            rval += self.protectedFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.protectedFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         for i in range(len(self.virtualProtectedFunctions)):
-            rval += self.virtualProtectedFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.virtualProtectedFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # private function
         rval += tab(tabcount) + getAccessString("private") + "\n"
 
         for i in range(len(self.privateFunctions)):
-            rval += self.privateFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.privateFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         for i in range(len(self.virtualPrivateFunctions)):
-            rval += self.virtualPrivateFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.virtualPrivateFunctions[i].generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # public member
         rval += tab(tabcount) + getAccessString("public") + "\n"
 
         for i in range(len(self.publicVariables)):
-            rval += self.publicVariables[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.publicVariables[i].generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # protected member
         rval += tab(tabcount) + getAccessString("protected") + "\n"
 
         for i in range(len(self.protectedVariables)):
-            rval += self.protectedVariables[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.protectedVariables[i].generateHeader(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # private member
         rval += tab(tabcount) + getAccessString("private") + "\n"
 
         for i in range(len(self.privateVariables)):
-            rval += self.privateVariables[i].generate_H(tabcount+1) + ";" + "\n"
+            rval += self.privateVariables[i].generateHeader(tabcount+1) + ";" + "\n"
 
         rval += tab(tabcount) + "};"
         rval += tab(tabcount) + "\n"
@@ -333,34 +340,34 @@ class CPPClass:
         rval = ""
 
         # generate constructor
-        rval += self.ctor.generate_CPP(tabcount) + "\n"
+        rval += self.ctor.generateCPP(tabcount) + "\n"
 
         # generate destructopr
-        rval += self.dtor.generate_CPP(tabcount) + "\n"
+        rval += self.dtor.generateCPP(tabcount) + "\n"
 
         #######################################################################
         # public function
         for i in range(len(self.publicFunctions)):
-            rval += self.publicFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.publicFunctions[i].generateCPP(tabcount) + "\n"
 
         for i in range(len(self.virtualPublicFunctions)):
-            rval += self.virtualPublicFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.virtualPublicFunctions[i].generateCPP(tabcount) + "\n"
 
         #######################################################################
         # protected function
         for i in range(len(self.protectedFunctions)):
-            rval += self.protectedFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.protectedFunctions[i].generateCPP(tabcount) + "\n"
 
         for i in range(len(self.virtualProtectedFunctions)):
-            rval += self.virtualProtectedFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.virtualProtectedFunctions[i].generateCPP(tabcount) + "\n"
 
         #######################################################################
         # private function
         for i in range(len(self.privateFunctions)):
-            rval += self.privateFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.privateFunctions[i].generateCPP(tabcount) + "\n"
 
         for i in range(len(self.virtualPrivateFunctions)):
-            rval += self.virtualPrivateFunctions[i].generate_CPP(tabcount) + "\n"
+            rval += self.virtualPrivateFunctions[i].generateCPP(tabcount) + "\n"
 
         return rval
 
