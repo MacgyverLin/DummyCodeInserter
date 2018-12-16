@@ -19,9 +19,9 @@ SoundController::~SoundController()
 }
 
 
-long SoundController::func22()
+float SoundController::func22(short p223, unsigned char p224, long p225, unsigned char p226, float p227, long p228, short p229, float p230, unsigned int p231, unsigned char p232, unsigned int p233, unsigned long p234, short p235, short p236, int p237, unsigned short p238)
 {
-	long rval;
+	float rval;
 
 	DummyMacro3()
 
@@ -29,9 +29,9 @@ long SoundController::func22()
 }
 
 
-short SoundController::func23(long p83, short p84, short p85, int p86, float p87, char p88, unsigned char p89)
+float SoundController::func23()
 {
-	short rval;
+	float rval;
 
 	DummyMacro4()
 
@@ -39,9 +39,9 @@ short SoundController::func23(long p83, short p84, short p85, int p86, float p87
 }
 
 
-short SoundController::func24(unsigned short p90, unsigned int p91, long p92)
+unsigned long SoundController::func24(int p239, unsigned int p240, int p241, unsigned int p242, long p243, long p244, float p245, unsigned short p246, unsigned int p247, unsigned short p248, short p249, unsigned char p250)
 {
-	short rval;
+	unsigned long rval;
 
 	DummyMacro5()
 
@@ -49,9 +49,9 @@ short SoundController::func24(unsigned short p90, unsigned int p91, long p92)
 }
 
 
-float SoundController::func25(unsigned long p93, short p94, unsigned int p95, float p96)
+double SoundController::func25(long p251, unsigned int p252, int p253, unsigned char p254, short p255, short p256, unsigned int p257, short p258, short p259, unsigned int p260, unsigned char p261, unsigned char p262, int p263, float p264, float p265, long p266)
 {
-	float rval;
+	double rval;
 
 	DummyMacro6()
 
@@ -59,9 +59,9 @@ float SoundController::func25(unsigned long p93, short p94, unsigned int p95, fl
 }
 
 
-unsigned short SoundController::func26(unsigned long p97, short p98, unsigned int p99, unsigned int p100, unsigned long p101, unsigned short p102, float p103, char p104, short p105)
+float SoundController::func26(long p267, float p268, float p269, unsigned long p270, unsigned short p271, int p272, unsigned int p273, long p274, unsigned short p275, int p276, unsigned short p277, float p278, long p279)
 {
-	unsigned short rval;
+	float rval;
 
 	DummyMacro7()
 
@@ -69,9 +69,9 @@ unsigned short SoundController::func26(unsigned long p97, short p98, unsigned in
 }
 
 
-float SoundController::func27(long p106, int p107, int p108, short p109, unsigned long p110, unsigned short p111)
+unsigned long SoundController::func27(char p280, int p281)
 {
-	float rval;
+	unsigned long rval;
 
 	DummyMacro8()
 
@@ -79,9 +79,9 @@ float SoundController::func27(long p106, int p107, int p108, short p109, unsigne
 }
 
 
-unsigned short SoundController::func28(unsigned int p112, short p113)
+char SoundController::func28(unsigned char p282, unsigned int p283, unsigned int p284, unsigned char p285, unsigned char p286, char p287, unsigned long p288, float p289, unsigned char p290, unsigned int p291, int p292, unsigned long p293, unsigned short p294)
 {
-	unsigned short rval;
+	char rval;
 
 	DummyMacro9()
 
@@ -89,9 +89,9 @@ unsigned short SoundController::func28(unsigned int p112, short p113)
 }
 
 
-int SoundController::func29(unsigned int p114, unsigned int p115)
+unsigned long SoundController::func29(unsigned int p295, float p296, unsigned int p297, unsigned long p298, short p299, char p300, unsigned short p301, unsigned int p302, unsigned short p303, int p304, unsigned char p305, int p306, int p307, short p308, int p309, unsigned long p310, int p311, char p312)
 {
-	int rval;
+	unsigned long rval;
 
 	DummyMacro10()
 
@@ -99,9 +99,9 @@ int SoundController::func29(unsigned int p114, unsigned int p115)
 }
 
 
-unsigned long SoundController::func30(int p116, unsigned long p117)
+float SoundController::func30(unsigned int p313, float p314, unsigned char p315, char p316, float p317, unsigned short p318, float p319, unsigned int p320)
 {
-	unsigned long rval;
+	float rval;
 
 	DummyMacro11()
 
@@ -109,9 +109,9 @@ unsigned long SoundController::func30(int p116, unsigned long p117)
 }
 
 
-unsigned long SoundController::func31(unsigned char p118)
+unsigned short SoundController::func31(char p321, unsigned short p322, float p323)
 {
-	unsigned long rval;
+	unsigned short rval;
 
 	DummyMacro12()
 
@@ -119,9 +119,9 @@ unsigned long SoundController::func31(unsigned char p118)
 }
 
 
-short SoundController::func32(char p119, unsigned short p120, int p121)
+double SoundController::func32(unsigned long p324, short p325, unsigned char p326, int p327, int p328, float p329, unsigned char p330, unsigned short p331, int p332, unsigned short p333, short p334, unsigned char p335, short p336, unsigned int p337, char p338, int p339)
 {
-	short rval;
+	double rval;
 
 	DummyMacro13()
 
@@ -129,9 +129,9 @@ short SoundController::func32(char p119, unsigned short p120, int p121)
 }
 
 
-unsigned long SoundController::func33(unsigned int p122, unsigned long p123, unsigned char p124, long p125, unsigned long p126, long p127)
+unsigned int SoundController::func33(unsigned short p340, unsigned long p341, unsigned int p342, unsigned int p343, float p344, unsigned int p345, unsigned short p346, unsigned long p347, unsigned short p348, int p349, unsigned long p350, long p351, char p352, unsigned char p353)
 {
-	unsigned long rval;
+	unsigned int rval;
 
 	DummyMacro14()
 
@@ -139,9 +139,9 @@ unsigned long SoundController::func33(unsigned int p122, unsigned long p123, uns
 }
 
 
-long SoundController::func34()
+unsigned short SoundController::func34(unsigned long p354, char p355, unsigned short p356, float p357, unsigned short p358, unsigned int p359)
 {
-	long rval;
+	unsigned short rval;
 
 	DummyMacro15()
 
@@ -149,9 +149,9 @@ long SoundController::func34()
 }
 
 
-unsigned char SoundController::func35()
+unsigned long SoundController::func35(unsigned int p360)
 {
-	unsigned char rval;
+	unsigned long rval;
 
 	DummyMacro16()
 
@@ -159,9 +159,9 @@ unsigned char SoundController::func35()
 }
 
 
-char SoundController::func36(short p128, unsigned int p129, long p130, unsigned char p131, int p132, unsigned int p133, unsigned int p134, unsigned long p135, char p136)
+unsigned long SoundController::func36(unsigned int p361, float p362, char p363, unsigned long p364, unsigned char p365, short p366, char p367, unsigned int p368, float p369, unsigned long p370, float p371, float p372, unsigned short p373, float p374, unsigned short p375)
 {
-	char rval;
+	unsigned long rval;
 
 	DummyMacro17()
 
@@ -169,9 +169,9 @@ char SoundController::func36(short p128, unsigned int p129, long p130, unsigned 
 }
 
 
-unsigned char SoundController::func37(long p137, char p138, unsigned long p139, short p140, short p141, char p142, unsigned char p143)
+unsigned long SoundController::func37(int p376, unsigned int p377, long p378, char p379, int p380, unsigned int p381, unsigned long p382, short p383, float p384, long p385, unsigned long p386, unsigned int p387, int p388)
 {
-	unsigned char rval;
+	unsigned long rval;
 
 	DummyMacro18()
 
@@ -179,9 +179,9 @@ unsigned char SoundController::func37(long p137, char p138, unsigned long p139, 
 }
 
 
-double SoundController::func38(int p144, int p145, short p146, int p147, unsigned long p148, long p149, long p150)
+unsigned short SoundController::func38(char p389, unsigned int p390, unsigned char p391, unsigned char p392, unsigned char p393)
 {
-	double rval;
+	unsigned short rval;
 
 	DummyMacro19()
 
@@ -189,9 +189,9 @@ double SoundController::func38(int p144, int p145, short p146, int p147, unsigne
 }
 
 
-short SoundController::func39()
+unsigned char SoundController::func39(int p394, unsigned long p395, unsigned short p396, char p397, short p398, int p399, unsigned short p400, char p401, float p402, short p403)
 {
-	short rval;
+	unsigned char rval;
 
 	DummyMacro20()
 
@@ -199,9 +199,9 @@ short SoundController::func39()
 }
 
 
-unsigned long SoundController::func40(unsigned short p151, long p152, unsigned long p153)
+unsigned int SoundController::func40(int p404, char p405, unsigned char p406, unsigned long p407, unsigned short p408, char p409, float p410, char p411, unsigned short p412, unsigned long p413, unsigned short p414, short p415, int p416, long p417, char p418, long p419)
 {
-	unsigned long rval;
+	unsigned int rval;
 
 	DummyMacro21()
 
@@ -209,9 +209,9 @@ unsigned long SoundController::func40(unsigned short p151, long p152, unsigned l
 }
 
 
-double SoundController::func41(int p154, unsigned short p155, float p156, short p157, char p158)
+short SoundController::func41(int p420, char p421, float p422, float p423, unsigned short p424, short p425, float p426, char p427, short p428, unsigned long p429, float p430, unsigned int p431, unsigned long p432, unsigned char p433, long p434, short p435, int p436)
 {
-	double rval;
+	short rval;
 
 	DummyMacro22()
 
@@ -219,7 +219,7 @@ double SoundController::func41(int p154, unsigned short p155, float p156, short 
 }
 
 
-unsigned short SoundController::func42(unsigned int p159, int p160, unsigned char p161, unsigned long p162, float p163, char p164)
+unsigned short SoundController::func42(unsigned char p437, float p438, float p439, char p440, short p441, unsigned int p442, unsigned long p443, float p444)
 {
 	unsigned short rval;
 
