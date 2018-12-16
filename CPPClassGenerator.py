@@ -203,29 +203,29 @@ class CPPClass:
 
         self.dtor = CPPDtor(className)
 
-        self.virtualPrivateFunctions = []
-        for i in range(virtualPrivateFunctionCount):
-            self.virtualPrivateFunctions.append(CPPFunction(className, "private"  ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
-
         self.privateFunctions = []
         for i in range(privateFunctionCount):
-            self.privateFunctions.append(CPPFunction(className, "private"  , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.privateFunctions.append(CPPFunction(className, "private"  ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
-        self.virtualProtectedFunctions = []
-        for i in range(virtualProtectedFunctionCount):
-            self.virtualProtectedFunctions.append(CPPFunction(className, "protected",        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+        self.virtualPrivateFunctions = []
+        for i in range(virtualPrivateFunctionCount):
+            self.virtualPrivateFunctions.append(CPPFunction(className, "private"  , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
         self.protectedFunctions = []
         for i in range(protectedFunctionCount):
-            self.protectedFunctions.append(CPPFunction(className, "protected", "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.protectedFunctions.append(CPPFunction(className, "protected",        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
-        self.virtualPublicFunctions = []
-        for i in range(virtualPublicFunctionCount):
-            self.virtualPublicFunctions.append(CPPFunction(className, "public"   ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+        self.virtualProtectedFunctions = []
+        for i in range(virtualProtectedFunctionCount):
+            self.virtualProtectedFunctions.append(CPPFunction(className, "protected", "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
         self.publicFunctions = []
         for i in range(publicFunctionCount):
-            self.publicFunctions.append(CPPFunction(className, "public"   , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.publicFunctions.append(CPPFunction(className, "public"   ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+
+        self.virtualPublicFunctions = []
+        for i in range(virtualPublicFunctionCount):
+            self.virtualPublicFunctions.append(CPPFunction(className, "public"   , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
         #####################################################################
         # prepare CPPMembers
