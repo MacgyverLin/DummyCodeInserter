@@ -1,8 +1,5 @@
 import sys
-from clang.cindex import Config
-from clang.cindex import TypeKind
-from clang.cindex import CursorKind
-from clang.cindex import Index
+from enum import Enum
 import random as Random
 
 ################################################################################################################################
@@ -28,65 +25,83 @@ def getVirtualString(isVirtual):
     else:
         return ""
 
-def getTypeString(typeIdx):
-    if(typeIdx==0):
-        return "char"
-    elif(typeIdx==1):
-        return "short"
-    elif(typeIdx==2):
-        return "int"
-    elif(typeIdx==3):
-        return "long"
-    elif(typeIdx==4):
-        return "unsigned char"
-    elif(typeIdx==5):
-        return "unsigned short"
-    elif(typeIdx==6):
-        return "unsigned int"
-    elif(typeIdx==7):
-        return "unsigned long"            
-    elif(typeIdx==8):
-        return "float"
-    elif(typeIdx==9):
-        return "double"
-    else:
-        return "void"
+functionCount = 0
+def getNextFunctionName(): # will replace by a dictionary
+    global functionCount
+    functionCount += 1
+    return "func" + str(functionCount)
 
-def getFunctionNames(functionIdx): # will replace by a dictionary
-    return "testFunction" + str(functionIdx)
+variableCount = 0
+def getNextVariableName(): # will replace by a dictionary
+    global variableCount
+    variableCount += 1
+    return "m_var" + str(variableCount)
 
-def getMemberNames(memberIdx): # will replace by a dictionary
-    return "testMember" + str(memberIdx)
+parameterCount = 0
+def getNextParameterName(): # will replace by a dictionary
+    global parameterCount
+    parameterCount += 1
+    return "p" + str(parameterCount)
 
-def getParameterName(parameterIdx): # will replace by a dictionary
-    return "parameter" + str(parameterIdx)
+macroCount = 0
+def getNextMacroName():
+    global macroCount
+    macroCount += 1
+    return "DummyMacro" + str(macroCount)
 
-class DummyParameterList:
+################################################################################################################################
+class CPPType:
+    def __init__(self, typeIdx):
+        self.typeIdx = typeIdx
+
+    def generate(self):
+        if(self.typeIdx==0):
+            return "char"
+        elif(self.typeIdx==1):
+            return "short"
+        elif(self.typeIdx==2):
+            return "int"
+        elif(self.typeIdx==3):
+            return "long"
+        elif(self.typeIdx==4):
+            return "unsigned char"
+        elif(self.typeIdx==5):
+            return "unsigned short"
+        elif(self.typeIdx==6):
+            return "unsigned int"
+        elif(self.typeIdx==7):
+            return "unsigned long"            
+        elif(self.typeIdx==8):
+            return "float"
+        elif(self.typeIdx==9):
+            return "double"
+        else:
+            return "void"
+    
+    def isVoid(self):
+        return self.typeIdx>9;
+
+class CPPParameterList:
     def __init__(self, count):
-        self.paramsTypeIndices = []
-        self.paramsNameIndices = []
+        self.paramsTypes = []
         self.addRandomParameters(count)
 
     def addRandomParameters(self, count):
         for i in range(count):
-            self.paramsTypeIndices.append(Random.randrange(0, 9))
-            self.paramsNameIndices.append(Random.randrange(0, 100))
-        return
+            self.paramsTypes.append(CPPType(Random.randrange(0, 9)))
     
     def addParameters(self, typeIdx):
-        self.paramsTypeIndices.append(typeIdx)
-        self.paramsNameIndices.append(Random.randrange(0, 100))
-        return
+        self.paramsTypes.append(CPPType(typeIdx))
 
     def generate(self):
         rval = ""
-        for i in range(len(self.paramsTypeIndices)):
+        for i in range(len(self.paramsTypes)):
             if(not(i==0)):
                 rval += ", "
-            rval += getTypeString(self.paramsTypeIndices[i]) + " " + getParameterName(self.paramsNameIndices[i])
+            rval += self.paramsTypes[i].generate() + " " + getNextParameterName()
         return rval
 
-class DummyCtor:
+class CPPCtor:
     def __init__(self, className, parentClassName):
         self.className = className
         self.parentClassName = parentClassName
@@ -97,13 +112,18 @@ class DummyCtor:
     def generate_CPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.className + "::" + self.className + "()" + "\n"
-        rval += tab(tabcount) + ":" + self.parentClassName + "()" + "\n"
+        rval += tab(tabcount) + ": " + self.parentClassName + "()" + "\n"
         rval += tab(tabcount) + "{" + "\n"
+
+        rval += "\n"
+        rval += tab(tabcount+1) + getNextMacroName() + "()\n"
+        rval += "\n"
+
         rval += tab(tabcount) + "}" + "\n"
         rval += "\n"
         return rval;
 
-class DummyDtor:
+class CPPDtor:
     def __init__(self, className):
         self.className = className
 
@@ -114,101 +134,114 @@ class DummyDtor:
         rval = ""
         rval += tab(tabcount) + self.className + "::" + "~" + self.className + "()" + "\n"
         rval += tab(tabcount) + "{" + "\n"
+
+        rval += "\n"
+        rval += tab(tabcount+1) + getNextMacroName() + "()\n"
+        rval += "\n"
+
         rval += tab(tabcount) + "}" + "\n"
         rval += "\n"
         return rval;
 
-class DummyFunction:
+class CPPFunction:
     def __init__(
-        self, className, access, isVirtual, functionTypeIdx, functionNameIdx, parameterList):
+        self, className, access, isVirtual, functionType, parameterList):
         self.className = className
         self.access = access
         self.isVirtual = isVirtual
-        self.functionTypeIdx = functionTypeIdx
-        self.functionNameIdx = functionNameIdx
+        self.functionType = functionType
         self.parameterList = parameterList
 
     def generate_H(self, tabcount):
         rval = ""
-        rval += tab(tabcount) + getVirtualString(self.isVirtual) + getTypeString(self.functionTypeIdx) + " " + getFunctionNames(self.functionNameIdx) + "(" + self.parameterList.generate() + ")"
+        rval += tab(tabcount) + getVirtualString(self.isVirtual) + self.functionType.generate() + " " + getNextFunctionName() + "(" + self.parameterList.generate() + ")"
         return rval
 
     def generate_CPP(self, tabcount):
         rval = ""
-        rval += tab(tabcount) + getTypeString(self.functionTypeIdx) + " " + self.className + "::" + getFunctionNames(self.functionNameIdx) + "(" + self.parameterList.generate() + ")" + "\n"
+        rval += tab(tabcount) + self.functionType.generate() + " " + self.className + "::" + getNextFunctionName() + "(" + self.parameterList.generate() + ")" + "\n"
         rval += tab(tabcount) + "{" + "\n"
-        rval += tab(tabcount+1) + getTypeString(self.functionTypeIdx) + " rval;\n"
-        rval += tab(tabcount+1) + "ShadaiMacro(" + str(self.functionNameIdx) + ")\n"
-        rval += tab(tabcount+1) + "return rval;\n"
+
+        if(not self.functionType.isVoid()): # except void, the function has return value
+            rval += tab(tabcount+1) + self.functionType.generate() + " rval;\n"
+        
+        rval += "\n"
+        rval += tab(tabcount+1) + getNextMacroName() + "()\n"
+        rval += "\n"
+
+        if(not self.functionType.isVoid()): # except void, the function has return value
+            rval += tab(tabcount+1) + "return rval;\n"
+        
         rval += tab(tabcount) + "}" + "\n"
-        rval += "\n"        
+        rval += "\n"
         return rval
 
-class DummyMember:
-    def __init__(self, className, access, memberTypeIdx, memberNameIdx):
+class CPPVariable:
+    def __init__(self, className, access, variableType):
         self.access = access
-        self.memberTypeIdx = memberTypeIdx
-        self.memberNameIdx = memberNameIdx
+        self.variableType = variableType
 
     def generate_H(self, tabcount):
         rval = ""
-        rval += tab(tabcount) + getTypeString(self.memberTypeIdx) + " " + getMemberNames(self.memberNameIdx)
+        rval += tab(tabcount) + self.variableType.generate()  + " " + getNextVariableName()
         return rval
 
     def generate_CPP(self, tabcount):
         rval = ""
         return rval
 
-class DummyClass:
-    def __init__(self, namespace, className, parentClassName, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateMemberCount, protectedMemberCount, publicMemberCount, ctorMaxParameterCount, functionMaxParameterCount):
+class CPPClass:
+    def __init__(self, namespace, className, parentClassName, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateVariableCount, protectedVariableCount, publicVariableCount, ctorMaxParameterCount, functionMaxParameterCount):
         self.sourceCode = ""
         self.namespace = namespace
         self.className = className
         self.parentClassName = parentClassName
-        self.functionNames = []
-        self.memberNames = []
 
         #####################################################################
-        # prepare dummyClasses
-        self.ctor = DummyCtor(className, parentClassName)
-        self.dtor = DummyDtor(className)
+        # prepare functions
+        self.ctor = CPPCtor(className, parentClassName)
 
-        self.dummyClassPrivateFunctions = []
+        self.dtor = CPPDtor(className)
+
+        self.virtualPrivateFunctions = []
         for i in range(virtualPrivateFunctionCount):
-            self.dummyClassPrivateFunctions.append(DummyFunction(className, "private"  ,        "", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.virtualPrivateFunctions.append(CPPFunction(className, "private"  ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
+        self.privateFunctions = []
         for i in range(privateFunctionCount):
-            self.dummyClassPrivateFunctions.append(DummyFunction(className, "private"  , "virtual", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.privateFunctions.append(CPPFunction(className, "private"  , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
-        self.dummyClassProtectedFunctions = []
+        self.virtualProtectedFunctions = []
         for i in range(virtualProtectedFunctionCount):
-            self.dummyClassProtectedFunctions.append(DummyFunction(className, "protected",        "", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.virtualProtectedFunctions.append(CPPFunction(className, "protected",        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
+        self.protectedFunctions = []
         for i in range(protectedFunctionCount):
-            self.dummyClassProtectedFunctions.append(DummyFunction(className, "protected", "virtual", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.protectedFunctions.append(CPPFunction(className, "protected", "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
-        self.dummyClassPublicFunctions = []
+        self.virtualPublicFunctions = []
         for i in range(virtualPublicFunctionCount):
-            self.dummyClassPublicFunctions.append(DummyFunction(className, "public"   ,        "", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.virtualPublicFunctions.append(CPPFunction(className, "public"   ,        "", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
+        self.publicFunctions = []
         for i in range(publicFunctionCount):
-            self.dummyClassPublicFunctions.append(DummyFunction(className, "public"   , "virtual", Random.randrange(0, 10), Random.randrange(0, 100), DummyParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
+            self.publicFunctions.append(CPPFunction(className, "public"   , "virtual", CPPType(Random.randrange(0, 10)), CPPParameterList(Random.randrange(0, functionMaxParameterCount)) ) )
 
         #####################################################################
-        # # prepare dummyMembers
-        self.dummyClassPrivateMembers = []
-        for i in range(privateMemberCount):
-            self.dummyClassPrivateMembers.append(DummyMember(className, "private"  , Random.randrange(0, 10), Random.randrange(0, 100) ) )
+        # prepare CPPMembers
+        self.privateVariables = []
+        for i in range(privateVariableCount):
+            self.privateVariables.append(CPPVariable(className, "private"  , CPPType(Random.randrange(0, 10)) ) )
 
-        self.dummyClassProtectedMembers = []
-        for i in range(protectedMemberCount):
-            self.dummyClassProtectedMembers.append(DummyMember(className, "protected", Random.randrange(0, 10), Random.randrange(0, 100) ) )
+        self.protectedVariables = []
+        for i in range(protectedVariableCount):
+            self.protectedVariables.append(CPPVariable(className, "protected", CPPType(Random.randrange(0, 10)) ) )
 
-        self.dummyClassPublicMembers = []
-        for i in range(publicMemberCount):
-            self.dummyClassPublicMembers.append(DummyMember(className, "public"   , Random.randrange(0, 10), Random.randrange(0, 100) ) )
+        self.publicVariables = []
+        for i in range(publicVariableCount):
+            self.publicVariables.append(CPPVariable(className, "public"   , CPPType(Random.randrange(0, 10)) ) )
 
-    def generateHeader(self, tabcount):
+    def generateHeaderBody(self, tabcount):
         rval = ""
         rval += tab(tabcount)  + "class " + self.className + "\n"
         rval += tab(tabcount) + "{\n"
@@ -227,56 +260,68 @@ class DummyClass:
         # public function
         rval += tab(tabcount) + getAccessString("public") + "\n"
 
-        for i in range(len(self.dummyClassPublicFunctions)):
-            rval += self.dummyClassPublicFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+        for i in range(len(self.publicFunctions)):
+            rval += self.publicFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+
+        for i in range(len(self.virtualPublicFunctions)):
+            rval += self.virtualPublicFunctions[i].generate_H(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # protected function
         rval += tab(tabcount) + getAccessString("protected") + "\n"
-        for i in range(len(self.dummyClassProtectedFunctions)):
-            rval += self.dummyClassProtectedFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+
+        for i in range(len(self.protectedFunctions)):
+            rval += self.protectedFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+
+        for i in range(len(self.virtualProtectedFunctions)):
+            rval += self.virtualProtectedFunctions[i].generate_H(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # private function
         rval += tab(tabcount) + getAccessString("private") + "\n"
 
-        for i in range(len(self.dummyClassPrivateFunctions)):
-            rval += self.dummyClassPrivateFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+        for i in range(len(self.privateFunctions)):
+            rval += self.privateFunctions[i].generate_H(tabcount+1) + ";" + "\n"
+
+        for i in range(len(self.virtualPrivateFunctions)):
+            rval += self.virtualPrivateFunctions[i].generate_H(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # public member
         rval += tab(tabcount) + getAccessString("public") + "\n"
 
-        for i in range(len(self.dummyClassPublicMembers)):
-            rval += self.dummyClassPublicMembers[i].generate_H(tabcount+1) + ";" + "\n"
+        for i in range(len(self.publicVariables)):
+            rval += self.publicVariables[i].generate_H(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # protected member
         rval += tab(tabcount) + getAccessString("protected") + "\n"
 
-        for i in range(len(self.dummyClassProtectedMembers)):
-            rval += self.dummyClassProtectedMembers[i].generate_H(tabcount+1) + ";" + "\n"
+        for i in range(len(self.protectedVariables)):
+            rval += self.protectedVariables[i].generate_H(tabcount+1) + ";" + "\n"
 
         #######################################################################
         # private member
         rval += tab(tabcount) + getAccessString("private") + "\n"
 
-        for i in range(len(self.dummyClassPrivateMembers)):
-            rval += self.dummyClassPrivateMembers[i].generate_H(tabcount+1) + ";" + "\n"
+        for i in range(len(self.privateVariables)):
+            rval += self.privateVariables[i].generate_H(tabcount+1) + ";" + "\n"
 
         rval += tab(tabcount) + "};"
         rval += tab(tabcount) + "\n"
         return rval
 
-    def generate_H(self, tabcount):
+    def generateHeader(self, tabcount):
         rval = ""
         rval += tab(tabcount) + "#ifndef _" + self.className + "_h_" + "\n"
         rval += tab(tabcount) + "#define _" + self.className + "_h_" + "\n"
         rval += "\n"
+        rval += tab(tabcount) + "#include \"" + self.parentClassName + ".h\"" + "\n"
+        rval += "\n"
         rval += tab(tabcount) + "namespace " + self.namespace + "\n"
         rval += tab(tabcount) + "{\n"
 
-        rval += self.generateHeader(tabcount+1)
+        rval += self.generateHeaderBody(tabcount+1)
 
         rval += tab(tabcount) + "};"
         rval += tab(tabcount) + "\n"
@@ -284,7 +329,7 @@ class DummyClass:
         rval += tab(tabcount) + "#endif // _" + self.className + "_h_\n"
         return rval
 
-    def generateSource(self, tabcount):
+    def generateCPPBody(self, tabcount):
         rval = ""
 
         # generate constructor
@@ -295,51 +340,60 @@ class DummyClass:
 
         #######################################################################
         # public function
-        for i in range(len(self.dummyClassPublicFunctions)):
-            rval += self.dummyClassPublicFunctions[i].generate_CPP(tabcount) + "\n"
+        for i in range(len(self.publicFunctions)):
+            rval += self.publicFunctions[i].generate_CPP(tabcount) + "\n"
+
+        for i in range(len(self.virtualPublicFunctions)):
+            rval += self.virtualPublicFunctions[i].generate_CPP(tabcount) + "\n"
 
         #######################################################################
         # protected function
-        for i in range(len(self.dummyClassProtectedFunctions)):
-            rval += self.dummyClassProtectedFunctions[i].generate_CPP(tabcount) + "\n"
+        for i in range(len(self.protectedFunctions)):
+            rval += self.protectedFunctions[i].generate_CPP(tabcount) + "\n"
+
+        for i in range(len(self.virtualProtectedFunctions)):
+            rval += self.virtualProtectedFunctions[i].generate_CPP(tabcount) + "\n"
 
         #######################################################################
         # private function
-        for i in range(len(self.dummyClassPrivateFunctions)):
-            rval += self.dummyClassPrivateFunctions[i].generate_CPP(tabcount) + "\n"
+        for i in range(len(self.privateFunctions)):
+            rval += self.privateFunctions[i].generate_CPP(tabcount) + "\n"
+
+        for i in range(len(self.virtualPrivateFunctions)):
+            rval += self.virtualPrivateFunctions[i].generate_CPP(tabcount) + "\n"
 
         return rval
 
-    def generate_CPP(self, tabcount):
+    def generateCPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + "#include \"" + self.className + ".h\"" + "\n"
-        rval += tab(tabcount) + "#include \"ShadaiMacro.h\"\n"
+        rval += tab(tabcount) + "#include \"DummyMacro.h\"\n"
         rval += tab(tabcount) + "using namespace " + self.namespace + ";" + "\n"
         rval += tab(tabcount) + "\n"
-        rval += self.generateSource(tabcount)
+        rval += self.generateCPPBody(tabcount)
         return rval
 
-    def write_H(self, filename):
+    def writeHeader(self, filename):
         file = open(filename, 'wt')
-        self.sourceCode = self.generate_H(0)
+        self.sourceCode = self.generateHeader(0)
         print(self.sourceCode)
         if(file):
             file.write(self.sourceCode)
             file.close()
 
-    def write_CPP(self, filename):
+    def writeCPP(self, filename):
         file = open(filename, 'wt')
-        self.sourceCode = self.generate_CPP(0)
+        self.sourceCode = self.generateCPP(0)
         print(self.sourceCode)
         if(file):
             file.write(self.sourceCode)
             file.close()            
 
-# python DummyClassGenerator.py MyNameSpace MyClass MyParentClass 1 2 3 4 5 6 7 8 9 10 11 12
+# python DummyClassGenerator.py Magnum SoundController Controller 1 2 3 4 5 6 7 8 9 10 11 12 100 100
 ################################################################################################################################
-def DummyClassGenerator():
-    if(len(sys.argv)!=18):
-        print('Usage: DummyClassGenerator namespace classname parentClassName privateFunctionCount protectedFunctionCount publicFunctionCount virtualPrivateFunctionCount virtualProtectedFunctionCount virtualPublicFunctionCount privateMemberCount protectedMemberCount publicMemberCount ctorMaxParameterCount functionMaxParameterCount')
+def CPPClassGenerator():
+    if(len(sys.argv)!=15):
+        print('Usage: CPPClassGenerator namespace classname parentClassName privateFunctionCount protectedFunctionCount publicFunctionCount virtualPrivateFunctionCount virtualProtectedFunctionCount virtualPublicFunctionCount privateMemberCount protectedMemberCount publicMemberCount ctorMaxParameterCount functionMaxParameterCount')
         return
 
     namespace = sys.argv[1]
@@ -360,8 +414,8 @@ def DummyClassGenerator():
     output_h_path = classname + ".h"
     output_cpp_path = classname + ".cpp"
 
-    dummyClass = DummyClass(namespace, classname, parentClassname, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateMemberCount, protectedMemberCount, publicMemberCount, ctorMaxParameterCount, functionMaxParameterCount)
-    dummyClass.write_H(output_h_path)
-    dummyClass.write_CPP(output_cpp_path)
+    cppClass = CPPClass(namespace, classname, parentClassname, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateMemberCount, protectedMemberCount, publicMemberCount, ctorMaxParameterCount, functionMaxParameterCount)
+    cppClass.writeHeader(output_h_path)
+    cppClass.writeCPP(output_cpp_path)
 
-DummyClassGenerator()
+CPPClassGenerator()

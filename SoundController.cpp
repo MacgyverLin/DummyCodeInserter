@@ -1,182 +1,230 @@
 #include "SoundController.h"
-#include "ShadaiMacro.h"
+#include "DummyMacro.h"
 using namespace Magnum;
 
 SoundController::SoundController()
-:Controller()
+: Controller()
 {
+
+	DummyMacro1()
+
 }
 
 
 SoundController::~SoundController()
 {
+
+	DummyMacro2()
+
 }
 
 
-int SoundController::testFunction39(unsigned long parameter20, unsigned short parameter52, unsigned char parameter87, unsigned char parameter63, char parameter51)
+unsigned int SoundController::func22(unsigned long p70, char p71, short p72, unsigned short p73)
 {
-	int rval;
-	ShadaiMacro(39)
+	unsigned int rval;
+
+	DummyMacro3()
+
 	return rval;
 }
 
 
-float SoundController::testFunction19(float parameter4, int parameter54)
+char SoundController::func23(unsigned int p74, short p75, int p76)
+{
+	char rval;
+
+	DummyMacro4()
+
+	return rval;
+}
+
+
+float SoundController::func24(unsigned int p77, unsigned int p78)
 {
 	float rval;
-	ShadaiMacro(19)
+
+	DummyMacro5()
+
 	return rval;
 }
 
 
-long SoundController::testFunction52(float parameter66, unsigned int parameter61, short parameter98, char parameter7, unsigned long parameter69, short parameter29, short parameter54, char parameter52, unsigned int parameter27)
+char SoundController::func25(float p79)
+{
+	char rval;
+
+	DummyMacro6()
+
+	return rval;
+}
+
+
+long SoundController::func26(short p80, unsigned int p81, long p82)
 {
 	long rval;
-	ShadaiMacro(52)
+
+	DummyMacro7()
+
 	return rval;
 }
 
 
-unsigned char SoundController::testFunction42(int parameter93, unsigned short parameter67, float parameter17)
+unsigned char SoundController::func27(char p83, int p84, long p85, unsigned long p86, short p87, unsigned long p88, char p89, unsigned char p90, unsigned char p91)
 {
 	unsigned char rval;
-	ShadaiMacro(42)
+
+	DummyMacro8()
+
 	return rval;
 }
 
 
-unsigned char SoundController::testFunction88(unsigned short parameter98, unsigned int parameter88, float parameter49, float parameter18)
+unsigned char SoundController::func28()
 {
 	unsigned char rval;
-	ShadaiMacro(88)
+
+	DummyMacro9()
+
 	return rval;
 }
 
 
-int SoundController::testFunction58(unsigned long parameter84, unsigned char parameter59, int parameter70, unsigned char parameter77, unsigned long parameter41, unsigned int parameter62, float parameter51, unsigned short parameter20, int parameter21)
+unsigned int SoundController::func29(unsigned long p92)
 {
-	int rval;
-	ShadaiMacro(58)
+	unsigned int rval;
+
+	DummyMacro10()
+
 	return rval;
 }
 
 
-unsigned short SoundController::testFunction23(long parameter89, long parameter41, unsigned short parameter36, unsigned short parameter58, short parameter63)
+unsigned int SoundController::func30(long p93, unsigned int p94)
 {
-	unsigned short rval;
-	ShadaiMacro(23)
+	unsigned int rval;
+
+	DummyMacro11()
+
 	return rval;
 }
 
 
-int SoundController::testFunction8(char parameter51, char parameter62, char parameter42, unsigned long parameter32, char parameter0, int parameter23, unsigned char parameter30, long parameter52)
+unsigned int SoundController::func31(short p95)
 {
-	int rval;
-	ShadaiMacro(8)
+	unsigned int rval;
+
+	DummyMacro12()
+
 	return rval;
 }
 
 
-char SoundController::testFunction64(short parameter23, unsigned int parameter82, short parameter53, int parameter38, char parameter14, long parameter62)
+unsigned long SoundController::func32(unsigned long p96, int p97, unsigned long p98, char p99)
 {
-	char rval;
-	ShadaiMacro(64)
+	unsigned long rval;
+
+	DummyMacro13()
+
 	return rval;
 }
 
 
-unsigned char SoundController::testFunction56(int parameter12, long parameter30, unsigned short parameter35, long parameter44, unsigned int parameter23, unsigned char parameter10, long parameter87)
-{
-	unsigned char rval;
-	ShadaiMacro(56)
-	return rval;
-}
-
-
-short SoundController::testFunction76(long parameter78)
+short SoundController::func33(unsigned int p100, unsigned long p101)
 {
 	short rval;
-	ShadaiMacro(76)
+
+	DummyMacro14()
+
 	return rval;
 }
 
 
-double SoundController::testFunction59(unsigned long parameter59, unsigned int parameter18, unsigned long parameter19, unsigned char parameter52)
-{
-	double rval;
-	ShadaiMacro(59)
-	return rval;
-}
-
-
-unsigned short SoundController::testFunction54(int parameter42, unsigned char parameter30)
-{
-	unsigned short rval;
-	ShadaiMacro(54)
-	return rval;
-}
-
-
-float SoundController::testFunction53(float parameter92, float parameter77, long parameter92, unsigned int parameter33, short parameter24, int parameter67, float parameter52, int parameter52, unsigned short parameter78, int parameter4)
-{
-	float rval;
-	ShadaiMacro(53)
-	return rval;
-}
-
-
-char SoundController::testFunction92(int parameter72)
-{
-	char rval;
-	ShadaiMacro(92)
-	return rval;
-}
-
-
-unsigned char SoundController::testFunction49(unsigned char parameter83, int parameter27, int parameter67)
-{
-	unsigned char rval;
-	ShadaiMacro(49)
-	return rval;
-}
-
-
-char SoundController::testFunction89()
-{
-	char rval;
-	ShadaiMacro(89)
-	return rval;
-}
-
-
-unsigned long SoundController::testFunction94(long parameter84, unsigned int parameter97, short parameter97)
+unsigned long SoundController::func34()
 {
 	unsigned long rval;
-	ShadaiMacro(94)
+
+	DummyMacro15()
+
 	return rval;
 }
 
 
-int SoundController::testFunction26(unsigned short parameter7, long parameter80, unsigned int parameter17, unsigned char parameter99, unsigned char parameter42, unsigned int parameter2)
+short SoundController::func35(unsigned long p102, unsigned char p103, float p104, unsigned short p105, unsigned long p106, unsigned long p107, unsigned char p108, unsigned int p109, int p110)
+{
+	short rval;
+
+	DummyMacro16()
+
+	return rval;
+}
+
+
+unsigned long SoundController::func36(short p111, char p112)
+{
+	unsigned long rval;
+
+	DummyMacro17()
+
+	return rval;
+}
+
+
+short SoundController::func37(char p113, unsigned long p114, unsigned int p115, long p116, int p117, int p118, unsigned int p119)
+{
+	short rval;
+
+	DummyMacro18()
+
+	return rval;
+}
+
+
+int SoundController::func38(float p120, char p121, unsigned char p122, unsigned short p123)
 {
 	int rval;
-	ShadaiMacro(26)
+
+	DummyMacro19()
+
 	return rval;
 }
 
 
-double SoundController::testFunction86(char parameter31, short parameter66, int parameter83, unsigned int parameter5, short parameter28, unsigned char parameter83, short parameter25, char parameter47, int parameter41, unsigned long parameter59)
+long SoundController::func39(unsigned char p124, unsigned short p125, unsigned short p126, int p127, unsigned short p128)
 {
-	double rval;
-	ShadaiMacro(86)
+	long rval;
+
+	DummyMacro20()
+
 	return rval;
 }
 
 
-unsigned long SoundController::testFunction40(short parameter53)
+int SoundController::func40(int p129)
 {
-	unsigned long rval;
-	ShadaiMacro(40)
+	int rval;
+
+	DummyMacro21()
+
+	return rval;
+}
+
+
+int SoundController::func41(short p130, long p131, unsigned long p132, char p133)
+{
+	int rval;
+
+	DummyMacro22()
+
+	return rval;
+}
+
+
+char SoundController::func42(unsigned long p134, long p135, unsigned short p136, unsigned int p137, unsigned short p138)
+{
+	char rval;
+
+	DummyMacro23()
+
 	return rval;
 }
 

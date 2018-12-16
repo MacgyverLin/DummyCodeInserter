@@ -1,6 +1,8 @@
 #ifndef _SoundController_h_
 #define _SoundController_h_
 
+#include "Controller.h"
+
 namespace Magnum
 {
 	class SoundController
@@ -9,56 +11,56 @@ namespace Magnum
 		SoundController();
 		~SoundController();
 	public:
-		int testFunction39(unsigned long parameter20, unsigned short parameter52, unsigned char parameter87, unsigned char parameter63, char parameter51);
-		float testFunction19(float parameter4, int parameter54);
-		long testFunction52(float parameter66, unsigned int parameter61, short parameter98, char parameter7, unsigned long parameter69, short parameter29, short parameter54, char parameter52, unsigned int parameter27);
-		unsigned char testFunction42(int parameter93, unsigned short parameter67, float parameter17);
-		unsigned char testFunction88(unsigned short parameter98, unsigned int parameter88, float parameter49, float parameter18);
-		int testFunction58(unsigned long parameter84, unsigned char parameter59, int parameter70, unsigned char parameter77, unsigned long parameter41, unsigned int parameter62, float parameter51, unsigned short parameter20, int parameter21);
-		virtual unsigned short testFunction23(long parameter89, long parameter41, unsigned short parameter36, unsigned short parameter58, short parameter63);
-		virtual int testFunction8(char parameter51, char parameter62, char parameter42, unsigned long parameter32, char parameter0, int parameter23, unsigned char parameter30, long parameter52);
-		virtual char testFunction64(short parameter23, unsigned int parameter82, short parameter53, int parameter38, char parameter14, long parameter62);
+		virtual unsigned int func1(unsigned long p1, char p2, short p3, unsigned short p4);
+		virtual char func2(unsigned int p5, short p6, int p7);
+		virtual float func3(unsigned int p8, unsigned int p9);
+		char func4(float p10);
+		long func5(short p11, unsigned int p12, long p13);
+		unsigned char func6(char p14, int p15, long p16, unsigned long p17, short p18, unsigned long p19, char p20, unsigned char p21, unsigned char p22);
+		unsigned char func7();
+		unsigned int func8(unsigned long p23);
+		unsigned int func9(long p24, unsigned int p25);
 	protected:
-		unsigned char testFunction56(int parameter12, long parameter30, unsigned short parameter35, long parameter44, unsigned int parameter23, unsigned char parameter10, long parameter87);
-		short testFunction76(long parameter78);
-		double testFunction59(unsigned long parameter59, unsigned int parameter18, unsigned long parameter19, unsigned char parameter52);
-		unsigned short testFunction54(int parameter42, unsigned char parameter30);
-		float testFunction53(float parameter92, float parameter77, long parameter92, unsigned int parameter33, short parameter24, int parameter67, float parameter52, int parameter52, unsigned short parameter78, int parameter4);
-		virtual char testFunction92(int parameter72);
-		virtual unsigned char testFunction49(unsigned char parameter83, int parameter27, int parameter67);
+		virtual unsigned int func10(short p26);
+		virtual unsigned long func11(unsigned long p27, int p28, unsigned long p29, char p30);
+		short func12(unsigned int p31, unsigned long p32);
+		unsigned long func13();
+		short func14(unsigned long p33, unsigned char p34, float p35, unsigned short p36, unsigned long p37, unsigned long p38, unsigned char p39, unsigned int p40, int p41);
+		unsigned long func15(short p42, char p43);
+		short func16(char p44, unsigned long p45, unsigned int p46, long p47, int p48, int p49, unsigned int p50);
 	private:
-		char testFunction89();
-		unsigned long testFunction94(long parameter84, unsigned int parameter97, short parameter97);
-		int testFunction26(unsigned short parameter7, long parameter80, unsigned int parameter17, unsigned char parameter99, unsigned char parameter42, unsigned int parameter2);
-		double testFunction86(char parameter31, short parameter66, int parameter83, unsigned int parameter5, short parameter28, unsigned char parameter83, short parameter25, char parameter47, int parameter41, unsigned long parameter59);
-		virtual unsigned long testFunction40(short parameter53);
+		virtual int func17(float p51, char p52, unsigned char p53, unsigned short p54);
+		long func18(unsigned char p55, unsigned short p56, unsigned short p57, int p58, unsigned short p59);
+		int func19(int p60);
+		int func20(short p61, long p62, unsigned long p63, char p64);
+		char func21(unsigned long p65, long p66, unsigned short p67, unsigned int p68, unsigned short p69);
 	public:
-		unsigned short testMember70;
-		unsigned char testMember99;
-		unsigned int testMember83;
-		char testMember24;
-		char testMember55;
-		long testMember56;
-		unsigned int testMember65;
-		unsigned int testMember29;
-		long testMember42;
+		unsigned long m_var1;
+		char m_var2;
+		short m_var3;
+		char m_var4;
+		unsigned short m_var5;
+		unsigned int m_var6;
+		short m_var7;
+		int m_var8;
+		unsigned char m_var9;
 	protected:
-		unsigned long testMember17;
-		unsigned long testMember10;
-		unsigned char testMember9;
-		double testMember82;
-		double testMember32;
-		short testMember64;
-		double testMember97;
-		long testMember0;
+		long m_var10;
+		int m_var11;
+		long m_var12;
+		unsigned short m_var13;
+		long m_var14;
+		long m_var15;
+		float m_var16;
+		float m_var17;
 	private:
-		int testMember62;
-		double testMember30;
-		float testMember43;
-		int testMember77;
-		unsigned short testMember47;
-		unsigned long testMember53;
-		unsigned long testMember43;
+		unsigned int m_var18;
+		short m_var19;
+		unsigned int m_var20;
+		unsigned char m_var21;
+		unsigned short m_var22;
+		unsigned short m_var23;
+		unsigned short m_var24;
 	};	
 };
 
