@@ -244,8 +244,6 @@ class CPPClass:
     def generateHeaderBody(self, tabcount):
         rval = ""
 
-        print(self.parentClassName)
-
         if(not self.parentClassName==""):
             rval += tab(tabcount)  + "class " + self.className + " : public " + self.parentClassName + "\n"
         else:
@@ -396,11 +394,11 @@ class CPPClass:
             file.write(self.sourceCode)
             file.close()            
 
-# python DummyClassGenerator.py Magnum SoundController Controller 1 2 3 4 5 6 7 8 9 10 11 12 100 100
+# python CPPClassGenerator.py Magnum SoundController Controller 1 2 3 4 5 6 7 8 9 30 40
 ################################################################################################################################
 def CPPClassGenerator():
     if(len(sys.argv)!=15):
-        print('Usage: CPPClassGenerator namespace classname parentClassName privateFunctionCount protectedFunctionCount publicFunctionCount virtualPrivateFunctionCount virtualProtectedFunctionCount virtualPublicFunctionCount privateMemberCount protectedMemberCount publicMemberCount ctorMaxParameterCount functionMaxParameterCount')
+        print('Usage: CPPClassGenerator namespace classname parentClassName privateFunctionCount protectedFunctionCount publicFunctionCount virtualPrivateFunctionCount virtualProtectedFunctionCount virtualPublicFunctionCount privateVariableCount protectedVariableCount publicVariableCount ctorMaxParameterCount functionMaxParameterCount')
         return
 
     namespace = sys.argv[1]
@@ -412,16 +410,16 @@ def CPPClassGenerator():
     virtualPrivateFunctionCount = int(sys.argv[7])
     virtualProtectedFunctionCount = int(sys.argv[8])
     virtualPublicFunctionCount = int(sys.argv[9])
-    privateMemberCount = int(sys.argv[10])
-    protectedMemberCount = int(sys.argv[11])
-    publicMemberCount  = int(sys.argv[12])
+    privateVariableCount = int(sys.argv[10])
+    protectedVariableCount = int(sys.argv[11])
+    publicVariableCount  = int(sys.argv[12])
     ctorMaxParameterCount = int(sys.argv[13])
     functionMaxParameterCount  = int(sys.argv[14])
 
     output_h_path = classname + ".h"
     output_cpp_path = classname + ".cpp"
 
-    cppClass = CPPClass(namespace, classname, parentClassname, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateMemberCount, protectedMemberCount, publicMemberCount, ctorMaxParameterCount, functionMaxParameterCount)
+    cppClass = CPPClass(namespace, classname, parentClassname, privateFunctionCount, protectedFunctionCount, publicFunctionCount, virtualPrivateFunctionCount, virtualProtectedFunctionCount, virtualPublicFunctionCount, privateVariableCount, protectedVariableCount, publicVariableCount, ctorMaxParameterCount, functionMaxParameterCount)
     cppClass.writeHeader(output_h_path)
     cppClass.writeCPP(output_cpp_path)
 
