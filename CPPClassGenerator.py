@@ -112,7 +112,8 @@ class CPPCtor:
     def generateCPP(self, tabcount):
         rval = ""
         rval += tab(tabcount) + self.className + "::" + self.className + "()" + "\n"
-        rval += tab(tabcount) + ": " + self.parentClassName + "()" + "\n"
+        if(not self.parentClassName==""):
+            rval += tab(tabcount) + ": " + self.parentClassName + "()" + "\n"
         rval += tab(tabcount) + "{" + "\n"
 
         rval += "\n"
@@ -321,8 +322,9 @@ class CPPClass:
         rval += tab(tabcount) + "#ifndef _" + self.className + "_h_" + "\n"
         rval += tab(tabcount) + "#define _" + self.className + "_h_" + "\n"
         rval += "\n"
-        rval += tab(tabcount) + "#include \"" + self.parentClassName + ".h\"" + "\n"
-        rval += "\n"
+        if(not self.parentClassName==""):
+            rval += tab(tabcount) + "#include \"" + self.parentClassName + ".h\"" + "\n"
+            rval += "\n"
         rval += tab(tabcount) + "namespace " + self.namespace + "\n"
         rval += tab(tabcount) + "{\n"
 
